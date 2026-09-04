@@ -13,24 +13,6 @@ jobs:
         node-version: [20.x]
  
     steps:
-      - uses: actions/checkout@v4
-      - name: Testing Build pre-Deploy
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - run: npm i
-      - run: npm run build
-
-    deploy:
-      needs: test-build
-      runs-on: ubuntu-latest
-      
-      strategy:
-        matrix:
-          node-version: [20.x]
-
-      steps:
         - name: Deploy to GitHub Pages
           uses: appleboy/ssh-action@master
           with:
@@ -62,5 +44,13 @@ jobs:
               npm install;
               npm run build; 
               }
+
+    deploy:
+      needs: test-build
+      runs-on: ubuntu-latest
+      
+      strategy:
+        matrix:
+          node-version: [20.x]
 
 
